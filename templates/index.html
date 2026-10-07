@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Text Detector</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="container">
+    <header class="header">
+      <h1>AI Text Detector</h1>
+      <p class="subtitle">Paste a piece of English text and find out whether it looks human-written or AI-generated.</p>
+    </header>
+
+    <section class="panel">
+      <label for="text-input" class="visually-hidden">Text to analyze</label>
+      <textarea
+        id="text-input"
+        placeholder="Paste or type your text here..."
+        data-max-chars="{{ max_chars }}"
+        maxlength="{{ max_chars }}"
+        spellcheck="false"
+      ></textarea>
+
+      <div class="panel-footer">
+        <span id="counter" class="counter">0 words &middot; 0 / {{ max_chars }} characters</span>
+        <button id="analyze-btn" class="btn" type="button">
+          <span class="spinner" id="spinner" hidden></span>
+          <span id="btn-label">Analyze</span>
+        </button>
+      </div>
+
+      <p id="error" class="error" role="alert" hidden></p>
+    </section>
+
+    <section id="result-card" class="result" aria-live="polite" hidden>
+      <div class="result-row">
+        <div>
+          <p class="result-title">Prediction</p>
+          <p id="result-label" class="result-label">&mdash;</p>
+        </div>
+        <div class="result-confidence">
+          <p class="result-title">Confidence</p>
+          <p id="result-confidence" class="result-value">&mdash;</p>
+        </div>
+      </div>
+
+      <div class="bar" aria-hidden="true">
+        <div id="bar-fill" class="bar-fill"></div>
+      </div>
+
+      <p id="truncated-note" class="note" hidden>
+        Only the first 256 tokens of your text were analyzed.
+      </p>
+      <p class="note">
+        This is a model prediction and should not be treated as absolute proof.
+      </p>
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
